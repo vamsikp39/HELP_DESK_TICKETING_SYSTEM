@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Desk Ticketing System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Help Desk Ticketing System</h1>
+        <form action="{{ url_for('add_ticket') }}" method="POST">
+            <input type="text" name="title" placeholder="Ticket Title" required>
+            <textarea name="description" placeholder="Ticket Description" required></textarea>
+            <button type="submit">Add Ticket</button>
+        </form>
+        <h2>Current Tickets</h2>
+        <ul>
+            {% for ticket in tickets %}
+                <li>
+                    <strong>{{ ticket.title }}</strong> - {{ ticket.status }}
+                    <p>{{ ticket.description }}</p>
+                    <a href="{{ url_for('close_ticket', id=ticket.id) }}">Close</a>
+                    <a href="{{ url_for('delete_ticket', id=ticket.id) }}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
